@@ -1,3 +1,12 @@
+/*
+client.go
+
+grpc client 封装
+sam
+2023-01-30
+
+*/
+
 package srd
 
 import (
@@ -76,6 +85,7 @@ func NewGrpcClient(opt *GrpcClientOption) (*GrpcClient, error) {
 	return client, nil
 }
 
+// GetConn returns grpc clientConn,ctx and error
 func (c *GrpcClient) GetConn() (*grpc.ClientConn, context.Context, error) {
 	conn, err := c.newClientConn()
 	ctx := setCtx(c.serverName, c.clientName, conn)

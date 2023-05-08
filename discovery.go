@@ -1,3 +1,12 @@
+/*
+discovery.go
+
+基于etcd的发现 封装
+sam
+2023-01-30
+
+*/
+
 package srd
 
 import (

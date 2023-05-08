@@ -1,3 +1,12 @@
+/*
+server.go
+
+grpc server 封装
+sam
+2023-01-30
+
+*/
+
 package srd
 
 import (
@@ -35,6 +44,10 @@ func NewGrpcServer(opt *GrpcServerOption) (*GrpcServer, error) {
 	}
 	if opt.IsRegister && len(opt.EtcdEndpoints) == 0 {
 		return nil, errors.New("[grpc] need etcd endpoint")
+	}
+	//如果未传入IP地址，取本机的物理IP
+	if opt.IP == "" {
+		opt.IP, _ = GetLocalIP()
 	}
 	if !opt.IsRegister && opt.IP == "" {
 		return nil, errors.New("[grpc] need ip address")
