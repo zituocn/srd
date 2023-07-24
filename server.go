@@ -12,7 +12,7 @@ package srd
 import (
 	"errors"
 	"fmt"
-	"github.com/zituocn/gow/lib/logy"
+	"github.com/zituocn/logx"
 	"google.golang.org/grpc"
 	"net"
 )
@@ -68,18 +68,18 @@ func NewGrpcServer(opt *GrpcServerOption) (*GrpcServer, error) {
 // Run 运行
 func (s *GrpcServer) Run() {
 	go func() {
-		logy.Infof("[grpc] [%s] start grpc service listen on :%d", s.ServerName, s.port)
+		logx.Infof("[grpc] [%s] start grpc service listen on :%d", s.ServerName, s.port)
 		err := s.Server.Serve(s.Listener)
 		if err != nil {
-			logy.Errorf("[grpc] failed to listen: %s", err.Error())
+			logx.Errorf("[grpc] failed to listen: %s", err.Error())
 		}
 	}()
 	go func() {
 		if s.isRegister {
-			logy.Info("[grpc] start registration ...")
+			logx.Info("[grpc] start registration ...")
 			addr, err := GetLocalIP()
 			if err != nil {
-				logy.Errorf("[grpc] get location ip error : %s", err.Error())
+				logx.Errorf("[grpc] get location ip error : %s", err.Error())
 				return
 			}
 			val := fmt.Sprintf("%s:%d", addr, s.port)
@@ -91,10 +91,10 @@ func (s *GrpcServer) Run() {
 				Val:           val,
 			})
 			if err != nil {
-				logy.Errorf("[grpc] register failed: %s", err.Error())
+				logx.Errorf("[grpc] register failed: %s", err.Error())
 				return
 			}
-			logy.Info("[grpc] service registered successfully")
+			logx.Info("[grpc] service registered successfully")
 		}
 	}()
 
